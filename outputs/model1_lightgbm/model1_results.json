@@ -1,0 +1,199 @@
+{
+  "model_name": "LightGBM (Baseline)",
+  "algorithm_family": "Boosting",
+  "hyperparameters": {
+    "n_estimators": 250,
+    "learning_rate": 0.06,
+    "num_leaves": 63,
+    "min_child_samples": 40,
+    "subsample": 0.85,
+    "subsample_freq": 1,
+    "colsample_bytree": 0.85,
+    "random_state": 42,
+    "n_jobs": -1,
+    "verbose": -1
+  },
+  "train_candidate_miss_rate": 0.005358248741215434,
+  "student_test_candidate_miss_rate": 0.0012526096033402922,
+  "cv_metrics": {
+    "accuracy": 0.9720454062155074,
+    "precision": 0.8356437826765623,
+    "recall": 0.7796913914455874,
+    "macro_f1": 0.8958158964564026,
+    "positive_f1": 0.8066985404710489,
+    "log_loss": 0.07121461405290383,
+    "confusion_matrix": [
+      [
+        2255801,
+        28324
+      ],
+      [
+        40691,
+        144009
+      ]
+    ],
+    "fold_macro_f1_mean": 0.895401478578776,
+    "fold_macro_f1_std": 0.009234151590327281
+  },
+  "student_test_candidate_metrics": {
+    "accuracy": 0.9710032855196731,
+    "precision": 0.8301059756977196,
+    "recall": 0.7818248327759197,
+    "macro_f1": 0.8947889343627919,
+    "positive_f1": 0.8052423369843107,
+    "log_loss": 0.07490616853004045,
+    "confusion_matrix": [
+      [
+        227382,
+        3062
+      ],
+      [
+        4175,
+        14961
+      ]
+    ]
+  },
+  "student_test_route_eval": {
+    "obs_top1_acc_cls": 0.8113778705636743,
+    "obs_top1_acc_hmm": 0.8514091858037578,
+    "mean_obs_continuity_cls": 0.931519563596035,
+    "mean_obs_continuity_hmm": 0.9706640032092274,
+    "mean_seq_lcs_f1_cls": 0.7196010053219981,
+    "mean_seq_lcs_f1_hmm": 0.883732263952498,
+    "mean_seq_lcs_f1_hmm_gapfilled": 0.8973081937237168,
+    "per_trip": [
+      {
+        "trip_id": "00000000",
+        "n_obs": 2503,
+        "cls_top1_acc": 0.9288853375948861,
+        "hmm_top1_acc": 0.9488613663603676,
+        "cls_obs_continuity": 0.9668265387689848,
+        "hmm_obs_continuity": 0.9904076738609112,
+        "cls_disjoint_jumps": 83,
+        "hmm_disjoint_jumps": 24,
+        "cls_seq_lcs_f1": 0.7261146496815287,
+        "hmm_seq_lcs_f1": 0.8952879581151832,
+        "hmm_gapfilled_seq_f1": 0.8446601941747572
+      },
+      {
+        "trip_id": "00000007",
+        "n_obs": 1354,
+        "cls_top1_acc": 0.8862629246676514,
+        "hmm_top1_acc": 0.8552437223042836,
+        "cls_obs_continuity": 0.991130820399113,
+        "hmm_obs_continuity": 0.9992609016999261,
+        "cls_disjoint_jumps": 12,
+        "hmm_disjoint_jumps": 1,
+        "cls_seq_lcs_f1": 0.7261904761904762,
+        "hmm_seq_lcs_f1": 0.983739837398374,
+        "hmm_gapfilled_seq_f1": 0.979757085020243
+      },
+      {
+        "trip_id": "00000009",
+        "n_obs": 1049,
+        "cls_top1_acc": 0.765490943755958,
+        "hmm_top1_acc": 0.7836034318398475,
+        "cls_obs_continuity": 0.9150763358778626,
+        "hmm_obs_continuity": 0.941793893129771,
+        "cls_disjoint_jumps": 89,
+        "hmm_disjoint_jumps": 61,
+        "cls_seq_lcs_f1": 0.8507638072855463,
+        "hmm_seq_lcs_f1": 0.8751545117428925,
+        "hmm_gapfilled_seq_f1": 0.9370165745856354
+      },
+      {
+        "trip_id": "00000040",
+        "n_obs": 2995,
+        "cls_top1_acc": 0.882804674457429,
+        "hmm_top1_acc": 0.9121869782971619,
+        "cls_obs_continuity": 0.9629258517034068,
+        "hmm_obs_continuity": 0.9853039412157648,
+        "cls_disjoint_jumps": 111,
+        "hmm_disjoint_jumps": 44,
+        "cls_seq_lcs_f1": 0.6916764361078545,
+        "hmm_seq_lcs_f1": 0.9209302325581395,
+        "hmm_gapfilled_seq_f1": 0.8930635838150288
+      },
+      {
+        "trip_id": "00000052",
+        "n_obs": 262,
+        "cls_top1_acc": 0.8854961832061069,
+        "hmm_top1_acc": 0.9122137404580153,
+        "cls_obs_continuity": 0.9272030651340997,
+        "hmm_obs_continuity": 0.9655172413793104,
+        "cls_disjoint_jumps": 19,
+        "hmm_disjoint_jumps": 9,
+        "cls_seq_lcs_f1": 0.8491620111731844,
+        "hmm_seq_lcs_f1": 0.9325842696629214,
+        "hmm_gapfilled_seq_f1": 0.9893617021276596
+      },
+      {
+        "trip_id": "00000056",
+        "n_obs": 3958,
+        "cls_top1_acc": 0.8117736230419403,
+        "hmm_top1_acc": 0.864578069732188,
+        "cls_obs_continuity": 0.8931008339651251,
+        "hmm_obs_continuity": 0.9572908769269649,
+        "cls_disjoint_jumps": 423,
+        "hmm_disjoint_jumps": 169,
+        "cls_seq_lcs_f1": 0.8089240734077007,
+        "hmm_seq_lcs_f1": 0.911929543634908,
+        "hmm_gapfilled_seq_f1": 0.9594446474241871
+      },
+      {
+        "trip_id": "00000065",
+        "n_obs": 768,
+        "cls_top1_acc": 0.8216145833333334,
+        "hmm_top1_acc": 0.8671875,
+        "cls_obs_continuity": 0.9413298565840938,
+        "hmm_obs_continuity": 0.9804432855280313,
+        "cls_disjoint_jumps": 45,
+        "hmm_disjoint_jumps": 15,
+        "cls_seq_lcs_f1": 0.7338935574229692,
+        "hmm_seq_lcs_f1": 0.9328621908127209,
+        "hmm_gapfilled_seq_f1": 0.9666666666666666
+      },
+      {
+        "trip_id": "00000076",
+        "n_obs": 1486,
+        "cls_top1_acc": 0.8149394347240915,
+        "hmm_top1_acc": 0.8566621803499327,
+        "cls_obs_continuity": 0.9037037037037037,
+        "hmm_obs_continuity": 0.9643097643097643,
+        "cls_disjoint_jumps": 143,
+        "hmm_disjoint_jumps": 53,
+        "cls_seq_lcs_f1": 0.788391777509069,
+        "hmm_seq_lcs_f1": 0.8997214484679666,
+        "hmm_gapfilled_seq_f1": 0.908641975308642
+      },
+      {
+        "trip_id": "00000077",
+        "n_obs": 3911,
+        "cls_top1_acc": 0.6663257478905651,
+        "hmm_top1_acc": 0.7440552288417285,
+        "cls_obs_continuity": 0.9135549872122762,
+        "hmm_obs_continuity": 0.9624040920716113,
+        "cls_disjoint_jumps": 338,
+        "hmm_disjoint_jumps": 147,
+        "cls_seq_lcs_f1": 0.30263929618768326,
+        "hmm_seq_lcs_f1": 0.6684073107049608,
+        "hmm_gapfilled_seq_f1": 0.5769644779332617
+      },
+      {
+        "trip_id": "00000091",
+        "n_obs": 874,
+        "cls_top1_acc": 0.7791762013729977,
+        "hmm_top1_acc": 0.8192219679633868,
+        "cls_obs_continuity": 0.9003436426116839,
+        "hmm_obs_continuity": 0.9599083619702177,
+        "cls_disjoint_jumps": 87,
+        "hmm_disjoint_jumps": 35,
+        "cls_seq_lcs_f1": 0.7182539682539684,
+        "hmm_seq_lcs_f1": 0.8167053364269141,
+        "hmm_gapfilled_seq_f1": 0.9175050301810865
+      }
+    ]
+  },
+  "train_time_s": 19.97910141700413,
+  "student_test_inference_time_s": 0.6519620000035502
+}

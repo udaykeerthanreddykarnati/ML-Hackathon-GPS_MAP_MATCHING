@@ -1,0 +1,26 @@
+{
+  "train": {
+    "n_trips": 80,
+    "total_gps": 208417,
+    "total_nodes": 1933485,
+    "total_arcs": 3876904,
+    "total_route_arcs": 31336,
+    "median_gps_per_trip": 1529.0,
+    "median_route_km": 14.318169131536129,
+    "trips_with_dt_gt_10s": 40,
+    "total_isolated_nodes": 0,
+    "total_route_disjoint_jumps": 13
+  },
+  "student_test": {
+    "n_trips": 10,
+    "total_gps": 19160,
+    "total_nodes": 90689,
+    "total_arcs": 185041,
+    "total_route_arcs": 3477,
+    "median_gps_per_trip": 1420.0,
+    "median_route_km": 14.76851595027992,
+    "trips_with_dt_gt_10s": 2,
+    "total_isolated_nodes": 0,
+    "total_route_disjoint_jumps": 1
+  }
+}

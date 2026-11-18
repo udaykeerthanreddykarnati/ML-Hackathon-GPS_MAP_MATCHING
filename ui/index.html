@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>PathSnap Evaluator Console | Distributed Map-Matching</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin="anonymous"
+  >
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link visually-hidden">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <h1>PathSnap Evaluator Console</h1>
+        <p class="subtitle">Laptop 2 UI &mdash; Distributed ML + HMM/Viterbi Route Reconstruction</p>
+      </div>
+
+      <form id="api-config-form" class="api-form">
+        <label for="api-base-url">Laptop 1 API URL:</label>
+        <input
+          id="api-base-url"
+          name="apiBaseUrl"
+          type="url"
+          value="http://localhost:8000"
+          aria-describedby="api-url-hint"
+          required
+        >
+        <span id="api-url-hint" class="visually-hidden">
+          Enter the base HTTP address of the FastAPI server running on Laptop 1.
+        </span>
+        <button type="submit" id="connect-btn">Connect</button>
+      </form>
+    </div>
+  </header>
+
+  <main id="main-content" class="workspace-grid" tabindex="-1">
+    <aside class="sidebar" aria-label="Evaluation Trip Controls">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Evaluation Trips</h2>
+          <span id="split-badge" class="badge">Not connected</span>
+        </div>
+        <p id="server-model-info" class="muted">Connect to Laptop 1 API to load trips.</p>
+
+        <div id="status-region" class="status-banner">
+          Ready. Click Connect or select a trip.
+        </div>
+        <div id="live-announcer" class="visually-hidden" aria-live="polite"></div>
+        <progress id="loading-progress" class="loading-bar" aria-label="Running map-matching inference" hidden></progress>
+
+        <ul id="trip-list" class="trip-list" aria-label="Available evaluation trips"></ul>
+      </section>
+
+      <section class="panel">
+        <h2>Map Layers</h2>
+        <div class="layer-controls">
+          <label class="layer-toggle">
+            <input type="checkbox" id="toggle-gps" checked>
+            <span class="swatch swatch-gps" aria-hidden="true"></span>
+            Raw GPS Points (.track)
+          </label>
+          <label class="layer-toggle">
+            <input type="checkbox" id="toggle-network" checked>
+            <span class="swatch swatch-net" aria-hidden="true"></span>
+            Road Network (.nodes/.arcs)
+          </label>
+          <label class="layer-toggle">
+            <input type="checkbox" id="toggle-cls">
+            <span class="swatch swatch-cls" aria-hidden="true"></span>
+            Classifier-Only Prediction
+          </label>
+          <label class="layer-toggle">
+            <input type="checkbox" id="toggle-hmm" checked>
+            <span class="swatch swatch-hmm" aria-hidden="true"></span>
+            HMM/Viterbi Reconstructed Route
+          </label>
+        </div>
+        <p class="note">
+          Ground-truth <code>.route</code> files remain strictly server-side on Laptop 1 and are never sent to this UI.
+        </p>
+      </section>
+    </aside>
+
+    <section class="content-area" aria-label="Route Map and Server Evaluation Metrics">
+      <section class="panel map-panel">
+        <div class="panel-header">
+          <h2 id="map-heading">Trajectory &amp; Reconstructed Route</h2>
+          <span id="active-trip-badge" class="badge">No trip selected</span>
+        </div>
+        <div id="map-container" class="map-box" role="region" aria-label="Interactive route map">
+          <div id="leaflet-map" class="leaflet-host"></div>
+          <canvas id="fallback-canvas" class="fallback-canvas" hidden></canvas>
+        </div>
+      </section>
+
+      <section class="panel metrics-panel">
+        <h2>Server-Side Evaluation &amp; Comparison</h2>
+        <div class="kpi-grid" id="kpi-grid">
+          <div class="kpi-card">
+            <span class="kpi-label">HMM Top-1 Obs Accuracy</span>
+            <strong class="kpi-value" id="kpi-hmm-top1">--</strong>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">HMM Sequence LCS F1</span>
+            <strong class="kpi-value" id="kpi-hmm-seqf1">--</strong>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">HMM Route Continuity</span>
+            <strong class="kpi-value" id="kpi-hmm-cont">--</strong>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Candidate Miss Rate</span>
+            <strong class="kpi-value" id="kpi-miss-rate">--</strong>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">API Inference Time</span>
+            <strong class="kpi-value" id="kpi-latency">--</strong>
+          </div>
+        </div>
+
+        <div tabindex="0" role="region" aria-labelledby="comparison-table-caption" class="table-wrapper">
+          <table>
+            <caption id="comparison-table-caption">
+              Classifier-Only vs. Classifier + HMM/Viterbi Metrics (Computed on Laptop 1)
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Metric</th>
+                <th scope="col">Classifier Only</th>
+                <th scope="col">Classifier + HMM / Viterbi</th>
+                <th scope="col">Notes</th>
+              </tr>
+            </thead>
+            <tbody id="metrics-tbody">
+              <tr>
+                <th scope="row">Status</th>
+                <td colspan="3">Select any trip from the left panel to run inference on Laptop 1.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <details class="arc-details">
+          <summary>Predicted Arc Sequence (<code>arc_id</code> list from Laptop 1)</summary>
+          <pre id="arc-sequence-output" class="arc-pre" tabindex="0"><code>Run inference on a trip to inspect predicted arc IDs.</code></pre>
+        </details>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>PathSnap &mdash; UE24CS352A Machine Learning Hackathon | Two-Laptop Map-Matching Architecture</p>
+  </footer>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin="anonymous"
+  ></script>
+  <script src="./app.js" defer></script>
+</body>
+</html>

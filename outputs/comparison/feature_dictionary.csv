@@ -1,0 +1,32 @@
+feature,description
+dist_to_arc_m,Perpendicular Euclidean distance (m) from GPS observation to arc segment in local metric projection
+signed_lateral_m,"Signed lateral offset (m): positive left of directed arc, negative right"
+abs_lateral_m,Absolute lateral offset (m) from directed arc line
+proj_frac,"Normalized projection position s in [0, 1] along arc (0=from_node, 1=to_node)"
+dist_to_from_m,Distance (m) from GPS observation to arc start node (from_node)
+dist_to_to_m,Distance (m) from GPS observation to arc end node (to_node)
+arc_len_m,Physical length of directed road arc (m)
+log_arc_len,log1p(arc_len_m) compressed segment length
+dist_rank,Zero-based rank (0..K-1) of candidate arc by distance at GPS step t
+dist_diff_best,Distance margin (m) over closest candidate at step t
+dist_ratio_best,Ratio (dist + 1) / (min_dist + 1) relative to closest candidate at step t
+cos_heading_diff,Cosine similarity between smoothed GPS movement vector and directed arc vector
+sin_heading_diff,Sine of signed turn angle between GPS movement vector and directed arc vector
+heading_conf,"Confidence in [0, 1] that local GPS displacement exceeds stationary jitter (>= 4m)"
+cos_heading_weighted,cos_heading_diff * heading_conf (suppresses stationary heading noise)
+gps_speed_mps,"Smoothed local GPS speed (m/s), clipped to [0, 60]"
+log_dt_prev,log1p(dt_prev) seconds since previous GPS observation
+log_dt_next,log1p(dt_next) seconds to next GPS observation
+prev_obs_dist_m,Distance (m) from previous GPS observation (t-1) to this candidate arc
+next_obs_dist_m,Distance (m) from next GPS observation (t+1) to this candidate arc
+prev2_obs_dist_m,Distance (m) from GPS observation (t-2) to this candidate arc
+next2_obs_dist_m,Distance (m) from GPS observation (t+2) to this candidate arc
+mean_5pt_dist_m,Mean distance (m) from local 5-point window [t-2..t+2] to this candidate arc
+proj_delta_m,Signed forward progress (m) along directed candidate arc between t-1 and t
+from_in_deg,Graph in-degree of arc's from_node
+to_out_deg,Graph out-degree of arc's to_node
+connects_from_prev,"1 if same arc or prev_top5.to_node == curr.from_node, else 0"
+connects_to_next,"1 if same arc or curr.to_node == next_top5.from_node, else 0"
+connects_2hop_prev,1 if reachable within 1-2 directed graph hops from prev_top5 candidates
+connects_2hop_next,1 if reaches next_top5 candidates within 1-2 directed graph hops
+has_reverse_arc,"1 if opposite-direction twin (to_node, from_node) exists in .arcs"

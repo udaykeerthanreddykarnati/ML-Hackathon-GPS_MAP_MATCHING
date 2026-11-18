@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+*.egg-info/
+Student folder/
+evaluator_test/
+PathSnap_student_materials/
+outputs/cache/
+outputs/randomforest2/
+scripts/randomforest2.py
+pathsnap_18feat/
+*.log
